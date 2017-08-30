@@ -1,4 +1,4 @@
-#**Behavioral Cloning** 
+# **Behavioral Cloning** 
 
 
 
@@ -34,7 +34,7 @@ The goals / steps of this project are the following:
 ---
 ### Files Submitted & Code Quality
 
-####1. Submission includes all required files and can be used to run the simulator in autonomous mode
+#### 1. Submission includes all required files and can be used to run the simulator in autonomous mode
 
 My project includes the following files:
 * `model.py:` This file contains the script to create and train the NVIDIA convolutional neural network model, which we replicate almost exactly in this project.
@@ -45,7 +45,7 @@ My project includes the following files:
 * `video.mp4:` A video of the car driving in autonomous mode around Track 1 (approximately 2 laps).
 * `helper_functions.py:` This file contains several functions that are used both in model.py and preprocessing.py.
 
-####2. Submission includes functional code
+#### 2. Submission includes functional code
 Using the Udacity provided simulator and my `drive.py` file, the car can be driven autonomously around the track by executing 
 ```sh
 python drive.py model.h5
@@ -56,16 +56,16 @@ This loads the trained model and use the model to make predictions on individual
 
 The `model.py` file contains the code for training and saving the convolution neural network. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
 
-###Model Architecture and Training Strategy
+### Model Architecture and Training Strategy
 
-####1. An appropriate model architecture has been employed
+#### 1. An appropriate model architecture has been employed
 
 My model consists of a convolutional neural network inspired in the NVIDIA model described [in this paper](https://arxiv.org/pdf/1604.07316v1.pdf). The choice is made because the problem they deal with is very similar to ours, where the system learns to drive on areas with or without lane markings, with different visual conditions, **_based only on steering training!_**. The architecture consists of 9 layers: one normalization, five 2-D convolutional, and three fully connected (we are not counting dropout layers here). 
 
 The model is implemented in **_lines 67-81 of `model.py`_**. The input are the images we collected from several laps on the simulator and are transformed into the YUV colorspace  (**_line 49_**) before the first normalization layer (**_line 68_**). Feature extraction is performed in the five convolutional layers; first three have 5x5 kernels and 2x2 stride, while the last two are 3x3 kernels and non-strided (**_lines 69-73_**). Each of these layers include ReLU activation functions to introduce non-linearity in the model. Finally there are three fully-connected layers (**_lines 76, 78, 80_**) which act as a controller for the steering angle (output, **_line 81_**).
 
 
-####2. Attempts to reduce overfitting in the model
+#### 2. Attempts to reduce overfitting in the model
 
 The model includes three additional [dropout layers](https://arxiv.org/pdf/1207.0580.pdf), which are not present in the original NVIDIA architecture. This regularization technique helps to reduce the overfitting problem effectively (**_`model.py`, lines 75, 77, 79_**). The keeping probability is a hyper-parameter we tuned, starting at the value suggested in Udacity lectures (0.5). We found that keep_prob=0.35 allows for a better performance of the network. 
 
@@ -73,7 +73,7 @@ We must be careful as to how many epochs we want included in our network during 
 
 Finally, training and validation were performed on a dataset that contained several modes of driving to ensure generalization of the model. Most of the preprocessing steps performed on the dataset were applied in **_`preprocessing`.py_**, while others such as YUV colorspace transformation and normalization were done in **_`model.py`_** (**_lines 49 and 68, respectively_**). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track for at least two laps (_**video.mp4**_).
 
-####3. Model parameter tuning
+#### 3. Model parameter tuning
 
 The following parameters were fine-tuned by hand, trying to assess the effect of changes while testing results in AWS EC2 instances. This might be okay for qualitative purposes, however the effect of varying several parameters might be correlated. This is not an optimized process, and furthermore is model architecture-dependent.
 
@@ -88,7 +88,7 @@ Other parameters that didn't require significant fine-tuning were:
 * Test size: We set an 80/20 split between training and validation datasets (**_line 18 of `model.py`_**). 
 * Generator's batch size (=32) which specifies the number of samples that are fed into the model at a given time (**_line 32 of `model.py`_**).
  
-####4. Appropriate training data
+#### 4. Appropriate training data
 
 Training data was collected from the simulator (track 1) to help our model keep the vehicle driving on the road. During data collection I used the keyboard as an input for the steering as I found the alternative (mouse) very challenging to handle. 
 
@@ -96,9 +96,9 @@ A combination of several driving strategies and the addition of Udacity data wer
 
 For details about how I created the training data, please see the next section. 
 
-###Model Architecture and Training Strategy
+### Model Architecture and Training Strategy
 
-####1. Solution Design Approach
+#### 1. Solution Design Approach
 
 The overall strategy for deriving a model architecture was to recognize the success convolutional neural networks have had dealing with feature extraction in images. Computer vision problems such as the one presented in this project are indeed well suited for these kind of networks. Not to mention the [NVIDIA model](https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/) was built for essentially the same problem as ours, where the system learns to drive on areas with or without lane markings, at different visual conditions, based only on steering training.
 
