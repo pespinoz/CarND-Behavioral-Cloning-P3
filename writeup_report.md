@@ -117,15 +117,13 @@ Parallel to this whole development my data collecting has increased considerably
 Clear peaks are seen around 0, -0.2, and 0.2. This underlines the fact that straight driving is extremely overrepresented in our dataset. To improve this situation and obtain a more balanced dataset I randomly sampled the images where the car was driving straight, keeping only a 20% of them. This resulted in a significantly smaller dataset (bad), but a much more balanced one (good!). 
 
 ![alt text][image13]
-
-tuning
  
 
 The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle drove too close to the side of the road, and further improvement included the fine-tuning of my model parameters (discussed in the previous Section).
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road (see _**`video.mp4`**_, a [recording](./video.mp4) of the car driving in autonomous mode around Track 1 approximately for 2 laps).
 
-####2. Final Model Architecture
+#### 2. Final Model Architecture
 
 The final model architecture (**_lines 67-81 of `model.py`_**) is based on the NVIDIA convolutional neural network described [here](https://arxiv.org/pdf/1604.07316v1.pdf). It receives as input 66x200 pixels images in the YUV colorspace. The architecture consists of one normalization layer (values set between -0.5 to 0.5), five 2-D convolutional layers (first three have 5x5 kernels and 2x2 stride, while the last two are 3x3 kernels and non-strided), and finally three fully connected layers for the regression stage. 
 
@@ -159,7 +157,7 @@ Finally, here is a visualization of the architecture (taken from Figure 4 of the
 
 ![alt text][image1]
 
-####3. Creation of the Training Set & Training Process
+#### 3. Creation of the Training Set & Training Process
 
 The goal of data collection in the simulator is to 
 to capture good driving behavior so the model learns it, and then the autonomous mode is able to predict steering angles satisfactorily.
